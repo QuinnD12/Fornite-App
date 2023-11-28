@@ -12,8 +12,8 @@ struct RatingView: View {
     var rating: Int
     
     let comments = [
-        "a",
-        "bwoeubf",
+        "a",//worst
+        "b",
         "c",
         "d",
         "e",
@@ -22,7 +22,7 @@ struct RatingView: View {
         "h",
         "i",
         "j",
-        "k"
+        "k" //best
     ]
     
     var body: some View {
