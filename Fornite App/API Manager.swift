@@ -23,7 +23,7 @@ func getUser(_ accountID: String, platform: String = "epic") async throws -> Str
         throw NetworkError.invalidResponse
     }
     
-    
+    //
     /*do {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
