@@ -7,15 +7,15 @@
 
 import Foundation
 
-func getUser(_ username: String, platform: String = "epic") async throws -> String {
-    let endpoint = "https://fortniteapi.io/v2/lookup?username=\(username)&platform=\(platform)"
+func getUser(_ accountID: String, platform: String = "epic") async throws -> String {
+    let endpoint = "https://fortnite-api.com/v2/stats/br/v2/\(accountID)"
     guard let url = URL(string: endpoint) else {
         throw NetworkError.invalidURL
     }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
-    request.setValue("51ecb01b-82cf0a62-640d2dd4-37caa501", forHTTPHeaderField: "Authorization")
+    request.setValue("d9a44c71-4a69-490d-8bf1-50fe2309ff24", forHTTPHeaderField: "Authorization")
     
     let (data, response) = try await URLSession.shared.data(for: request)
     
