@@ -31,7 +31,44 @@ func getID(_ username: String, platform: String = "epic") async throws -> String
     } catch {
         throw NetworkError.invalidData
     }
+    
+    
 }
+
+func getUser(_ user: String) async throws -> String {
+    let endpoint = "https://fortnite-api.com/v2/stats/br/v2/\(user)"
+    
+    guard let url = URL(string: endpoint) else {
+        throw NetworkError.invalidURL
+    }
+    
+    var request = URLRequest(url: url)
+    request.httpMethod = "GET"
+    request.setValue("d9a44c71-4a69-490d-8bf1-50fe2309ff24", forHTTPHeaderField: "Authorization")
+    
+    do {
+        let (data, response) = try await URLSession.shared.data(for: request)
+        
+        guard let httpResponse = response as? HTTPURLResponse else {
+            throw NetworkError.invalidResponse
+        }
+        
+        if httpResponse.statusCode == 200 {
+            if let decodedString = String(data: data, encoding: .utf8) {
+                return decodedString
+            } else {
+                print("Error decoding data as UTF-8 string.")
+                throw NetworkError.invalidData
+            }
+        } else {
+            print("Unexpected status code: \(httpResponse.statusCode)")
+            print("Response body: \(String(data: data, encoding: .utf8) ?? "N/A")")
+            throw NetworkError.invalidResponse
+        }
+    } catch {
+        print("Error: \(error)")
+        throw NetworkError.invalidData
+    }
 
 enum NetworkError: Error {
     case invalidURL
