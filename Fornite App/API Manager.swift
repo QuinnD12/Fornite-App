@@ -7,7 +7,7 @@
 
 import Foundation
 
-func getUser(_ accountID: String, platform: String = "epic") async throws -> FortniteID {
+func getUser(_ accountID: String, platform: String = "epic") async throws -> String {
     let endpoint = "https://fortnite-api.com/v2/stats/br/v2/\(accountID)"
     guard let url = URL(string: endpoint) else {
         throw NetworkError.invalidURL
@@ -27,7 +27,7 @@ func getUser(_ accountID: String, platform: String = "epic") async throws -> For
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        return try decoder.decode(FortniteID.self, from: data)
+        return try decoder.decode(FortniteID.self, from: data).accountId
     } catch {
         throw NetworkError.invalidData
     }
