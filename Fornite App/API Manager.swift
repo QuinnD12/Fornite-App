@@ -7,15 +7,15 @@
 
 import Foundation
 
-func getUser(_ accountID: String, platform: String = "epic") async throws -> String {
-    let endpoint = "https://fortnite-api.com/v2/stats/br/v2/\(accountID)"
+func getID(_ username: String, platform: String = "epic") async throws -> String {
+    let endpoint = "https://fortniteapi.io/v2/lookup?username=\(username)&platform=\(platform)"
     guard let url = URL(string: endpoint) else {
         throw NetworkError.invalidURL
     }
     
     var request = URLRequest(url: url)
     request.httpMethod = "GET"
-    request.setValue("d9a44c71-4a69-490d-8bf1-50fe2309ff24", forHTTPHeaderField: "Authorization")
+    request.setValue("51ecb01b-82cf0a62-640d2dd4-37caa501", forHTTPHeaderField: "Authorization")
     
     let (data, response) = try await URLSession.shared.data(for: request)
     
@@ -49,7 +49,6 @@ struct ForniteUser: Codable {
     let data: DataClass
 }
 
-// MARK: - DataClass
 struct DataClass: Codable {
     let account: Account
     let battlePass: BattlePass
@@ -57,22 +56,18 @@ struct DataClass: Codable {
     let stats: Stats
 }
 
-// MARK: - Account
 struct Account: Codable {
     let id, name: String
 }
 
-// MARK: - BattlePass
 struct BattlePass: Codable {
     let level, progress: Int
 }
 
-// MARK: - Stats
 struct Stats: Codable {
     let all, keyboardMouse, gamepad, touch: All
 }
 
-// MARK: - All
 struct All: Codable {
     let overall, solo: Overall?
     let duo: Overall?
@@ -81,7 +76,6 @@ struct All: Codable {
     let ltm: Overall?
 }
 
-// MARK: - Overall
 struct Overall: Codable {
     let score: Int
     let scorePerMin, scorePerMatch: Double

@@ -16,7 +16,7 @@ struct ContentView: View {
             Button("Load") {
                 Task {
                     do {
-                        data = try await getUser("cart_.")
+                        data = try await getID("cart_.")
                     } catch NetworkError.invalidURL {
                         print("Invalid URL")
                     } catch NetworkError.invalidResponse {
