@@ -8,25 +8,37 @@
 import SwiftUI
 
 struct ContentView: View {
-    @State var data: String = ""
+    @State private var id: String = ""
+    @State private var user: FortniteUser?
+    @State private var alert = false
+    @State private var errorAlert = ""
     
     var body: some View {
         VStack {
-            Text(data)
+            Text(String(user?.data?.stats?.all?.overall?.wins ?? 0))
             Button("Load") {
                 Task {
                     do {
-                        data = try await getID("cart_.")
+                        id = try await getID("cart_.")
+                        user = try await getUser(id)
                     } catch NetworkError.invalidURL {
-                        print("Invalid URL")
+                        alert = true
+                        errorAlert = "Invalid URL"
                     } catch NetworkError.invalidResponse {
-                        print("Invalid Response")
+                        alert = true
+                        errorAlert = "Invalid Response"
                     } catch NetworkError.invalidData {
-                        print("Invalid Data")
+                        alert = true
+                        errorAlert = "Invalid Data"
                     } catch {
-                        print("Unkown Error")
+                        alert = true
+                        errorAlert = "Unkown Error"
                     }
                 }
+            }
+        }.alert(errorAlert, isPresented: $alert) {
+            Button("OK", role: .cancel) {
+                //Todo Recall View
             }
         }
     }

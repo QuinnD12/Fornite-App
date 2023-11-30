@@ -31,13 +31,10 @@ func getID(_ username: String, platform: String = "epic") async throws -> String
     } catch {
         throw NetworkError.invalidData
     }
-    
-    
 }
 
-func getUser(_ user: String) async throws -> String {
-    let endpoint = "https://fortnite-api.com/v2/stats/br/v2/\(user)"
-    
+func getUser(_ userID: String) async throws -> FortniteUser? {
+    let endpoint = "https://fortnite-api.com/v2/stats/br/v2/\(userID)"
     guard let url = URL(string: endpoint) else {
         throw NetworkError.invalidURL
     }
@@ -46,29 +43,23 @@ func getUser(_ user: String) async throws -> String {
     request.httpMethod = "GET"
     request.setValue("d9a44c71-4a69-490d-8bf1-50fe2309ff24", forHTTPHeaderField: "Authorization")
     
+    let (data, response) = try await URLSession.shared.data(for: request)
+    
+    guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
+        throw NetworkError.invalidResponse
+    }
+    
     do {
-        let (data, response) = try await URLSession.shared.data(for: request)
+        let decoder = JSONDecoder()
+        decoder.keyDecodingStrategy = .convertFromSnakeCase
         
-        guard let httpResponse = response as? HTTPURLResponse else {
-            throw NetworkError.invalidResponse
-        }
-        
-        if httpResponse.statusCode == 200 {
-            if let decodedString = String(data: data, encoding: .utf8) {
-                return decodedString
-            } else {
-                print("Error decoding data as UTF-8 string.")
-                throw NetworkError.invalidData
-            }
-        } else {
-            print("Unexpected status code: \(httpResponse.statusCode)")
-            print("Response body: \(String(data: data, encoding: .utf8) ?? "N/A")")
-            throw NetworkError.invalidResponse
-        }
+        return try decoder.decode(FortniteUser.self, from: data)
     } catch {
-        print("Error: \(error)")
         throw NetworkError.invalidData
     }
+}
+
+
 
 enum NetworkError: Error {
     case invalidURL
@@ -81,50 +72,110 @@ struct FortniteID: Codable {
     let accountId: String
 }
 
-struct ForniteUser: Codable {
-    let status: Int
-    let data: DataClass
+
+struct FortniteUser: Codable {
+    let status: Int32?
+    let data: DataClass?
 }
 
 struct DataClass: Codable {
-    let account: Account
-    let battlePass: BattlePass
-    let image: String
-    let stats: Stats
+    let account: Account?
+    let battlePass: BattlePass?
+    let image: String?
+    let stats: Stats?
 }
 
 struct Account: Codable {
-    let id, name: String
+    let id, name: String?
 }
 
 struct BattlePass: Codable {
-    let level, progress: Int
+    let level, progress: Int32?
 }
 
 struct Stats: Codable {
-    let all, keyboardMouse, gamepad, touch: All
+    let all, keyboardMouse, gamepad, touch: All?
 }
 
 struct All: Codable {
-    let overall, solo: Overall?
-    let duo: Overall?
-    let trio: Overall?
-    let squad: Overall?
-    let ltm: Overall?
+    let overall: Overall?
+    let solo: Solo?
+    let duo: Duo?
+    let trio: TrioSquad?
+    let squad: TrioSquad?
+    let ltm: LTM?
 }
 
 struct Overall: Codable {
-    let score: Int
-    let scorePerMin, scorePerMatch: Double
-    let wins: Int
-    let top5, top12: Int?
-    let kills: Int
-    let killsPerMin, killsPerMatch: Double
-    let deaths: Int
-    let kd: Double
-    let matches: Int
-    let winRate: Double
-    let minutesPlayed, playersOutlived: Int
-    let lastModified: Date
-    let top3, top6, top10, top25: Int?
+    let score: Int64?
+    let scorePerMin, scorePerMatch: Double?
+    let wins: Int64?
+    let top3, top5, top6, top10, top12, top25: Int64?
+    let kills: Int64?
+    let killsPerMin, killsPerMatch: Double?
+    let deaths: Int64?
+    let kd: Double?
+    let matches: Int64?
+    let winRate: Double?
+    let minutesPlayed, playersOutlived: Int64?
+    let lastModified: String?
+}
+
+struct Solo: Codable {
+    let score: Int64?
+    let scorePerMin, scorePerMatch: Double?
+    let wins: Int64?
+    let top10, top25: Int64?
+    let kills: Int64?
+    let killsPerMin, killsPerMatch: Double?
+    let deaths: Int64?
+    let kd: Double?
+    let matches: Int64?
+    let winRate: Double?
+    let minutesPlayed, playersOutlived: Int64?
+    let lastModified: String?
+}
+
+struct Duo: Codable {
+    let score: Int64?
+    let scorePerMin, scorePerMatch: Double?
+    let wins: Int64?
+    let top5, top12: Int64?
+    let kills: Int64?
+    let killsPerMin, killsPerMatch: Double?
+    let deaths: Int64?
+    let kd: Double?
+    let matches: Int64?
+    let winRate: Double?
+    let minutesPlayed, playersOutlived: Int64?
+    let lastModified: String?
+}
+
+struct TrioSquad: Codable {
+    let score: Int64?
+    let scorePerMin, scorePerMatch: Double?
+    let wins: Int64?
+    let top3, top6: Int64?
+    let kills: Int64?
+    let killsPerMin, killsPerMatch: Double?
+    let deaths: Int64?
+    let kd: Double?
+    let matches: Int64?
+    let winRate: Double?
+    let minutesPlayed, playersOutlived: Int64?
+    let lastModified: String?
+}
+
+struct LTM: Codable {
+    let score: Int64?
+    let scorePerMin, scorePerMatch: Double?
+    let wins: Int64?
+    let kills: Int64?
+    let killsPerMin, killsPerMatch: Double?
+    let deaths: Int64?
+    let kd: Double?
+    let matches: Int64?
+    let winRate: Double?
+    let minutesPlayed, playersOutlived: Int64?
+    let lastModified: String?
 }
