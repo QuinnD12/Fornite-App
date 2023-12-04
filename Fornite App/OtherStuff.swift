@@ -8,8 +8,8 @@
 import SwiftUI
 
 struct RatingView: View {
-    @State private var av = 0
-    var rating: Int
+    @State private var av = 0.0
+    var rating: Double
     
     let comments = [
         "a",//worst
@@ -39,11 +39,11 @@ struct RatingView: View {
                 
                 Image(systemName: "line.diagonal.arrow")
                     .imageScale(.large)
-                    .scaleEffect(9)
+                    .scaleEffect(5.5)
                     .rotationEffect(.degrees(Double((av*190)/100) + 225))
             }
             
-            Text(String(av == 0 ? "--" : String(av)))
+            Text(String(av == 0 ? "--" : String((av*100).rounded()/100)))
                 .font(.custom("Trebuchet MS", size: 90))
             
             Text(rating == 0 ? "----" : comments[Int(av/10)])
@@ -60,6 +60,25 @@ struct RatingView: View {
     }
 }
 
-#Preview {
-    RatingView(rating: 11)
+func superSecretFortniteAlgorithim(_ user: FortniteUser?) -> Double {
+    if let user = user {
+        let ovstats = user.data?.stats?.all?.overall
+        
+        let kd = Double(ovstats?.kd ?? 0)
+        let kpm = Double(ovstats?.killsPerMatch ??  0)
+        let matches = Double(ovstats?.matches ?? 0)
+        let hours = Double((ovstats?.minutesPlayed ?? 0) / 60)
+        let wr = Double(ovstats?.winRate ?? 0)
+        let playersOutlived = Double(ovstats?.playersOutlived ?? 0)
+        let soloMatch = Double(user.data?.stats?.all?.solo?.matches ?? 0)
+        let ltmMatch = Double(user.data?.stats?.all?.ltm?.matches ?? 0)
+        let mobileHours = Double((user.data?.stats?.touch?.overall?.minutesPlayed ?? 0) / 60)
+        
+        var magicNumber/*up to around 10,000 to 20,000*/ = (kd+(2*wr)) * (hours+matches+(5*mobileHours) - (3*ltmMatch))
+        magicNumber += playersOutlived + (soloMatch/10) + (5000*kpm)
+        
+        return (100*magicNumber) / 2990785.26
+    } else {
+        return 0
+    }
 }

@@ -8,19 +8,29 @@
 import SwiftUI
 
 struct ContentView: View {
+    @State private var input = ""
     @State private var id: String = ""
     @State private var user: FortniteUser?
     @State private var alert = false
     @State private var errorAlert = ""
+    @State private var done = false
     
     var body: some View {
         VStack {
-            Text(String(user?.data?.stats?.all?.overall?.wins ?? 0))
+            TextField("Enter Username", text: $input)
+                .disableAutocorrection(true)
+                .textInputAutocapitalization(.never)
+                .font(.custom("Trebuchet MS", size: 40))
+                .padding(50)
+                .multilineTextAlignment(.center)
+            
             Button("Load") {
                 Task {
                     do {
-                        id = try await getID("cart_.")
+                        id = try await getID(input)
                         user = try await getUser(id)
+                        
+                        done.toggle()
                     } catch NetworkError.invalidURL {
                         alert = true
                         errorAlert = "Invalid URL"
@@ -35,7 +45,15 @@ struct ContentView: View {
                         errorAlert = "Unkown Error"
                     }
                 }
+            }.font(.custom("Trebuchet MS", size: 40))
+            .foregroundStyle(.black)
+            
+            Spacer()
+
+            if done {
+                RatingView(rating: superSecretFortniteAlgorithim(user))
             }
+            
         }.alert(errorAlert, isPresented: $alert) {
             Button("OK", role: .cancel) {
                 //Todo Recall View
