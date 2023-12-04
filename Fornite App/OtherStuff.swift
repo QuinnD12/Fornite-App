@@ -12,17 +12,17 @@ struct RatingView: View {
     var rating: Double
     
     let comments = [
-        "a",//worst
-        "b",
-        "c",
-        "d",
-        "e",
-        "f",
-        "g",
-        "h",
-        "i",
-        "j",
-        "k" //best
+        "Uninstall, please",//worst
+        "Bot vibes detected",
+        "Bush camper, really?",
+        "Getting there, slowly",
+        "Mediocre at its finest",
+        "Congrats on mediocrity",
+        "Pickaxe warrior",
+        "Llama loot luck?",
+        "Social skills: 0",
+        "Sweat much, tryhard?",
+        "Touch grass, you need it" //best
     ]
     
     var body: some View {
@@ -39,7 +39,7 @@ struct RatingView: View {
                 
                 Image(systemName: "line.diagonal.arrow")
                     .imageScale(.large)
-                    .scaleEffect(5.5)
+                    .scaleEffect(8)
                     .rotationEffect(.degrees(Double((av*190)/100) + 225))
             }
             
