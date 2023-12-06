@@ -14,7 +14,7 @@ struct ContentView: View {
     @State private var alert = false
     @State private var errorAlert = ""
     @State private var done = false
-    @State private var selection = "epic"
+    @State private var selection = "Select Platform"
     private let platforms = ["Select Platform", "Epic", "PlayStation", "Xbox", "Steam"]
     
     var body: some View {
@@ -26,6 +26,10 @@ struct ContentView: View {
                     .font(.custom("Trebuchet MS", size: 30))
                     .padding(50)
                     .multilineTextAlignment(.center)
+                    .onChange(of: input) {
+                        done = false
+                    }
+
                 
                 Picker("Please choose a color", selection: $selection) {
                    ForEach(platforms, id: \.self) {
@@ -53,13 +57,13 @@ struct ContentView: View {
                         id = try await getID(input, platform: plat)
                         user = try await getUser(id)
                         
-                        done.toggle()
+                        done = true
                     } catch NetworkError.invalidURL {
                         alert = true
                         errorAlert = "Invalid URL"
                     } catch NetworkError.invalidResponse {
                         alert = true
-                        errorAlert = "Invalid Response"
+                        errorAlert = "Invalid Response\nAccount Not Found?"
                     } catch NetworkError.invalidData {
                         alert = true
                         errorAlert = "Invalid Data"
