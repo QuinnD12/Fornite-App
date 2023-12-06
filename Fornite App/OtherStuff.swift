@@ -159,9 +159,6 @@ func superSecretFortniteAlgorithim(_ user: FortniteUser?) -> Double {
         magicNumber += playersOutlived + (soloMatch/10) + (5000*kpm) 
         magicNumber += 1000*scoreMatch
         
-        print(magicNumber)
-        print(scoreMatch)
-        
         return (100*magicNumber) / 3073423.6093333336
     } else {
         return 0
