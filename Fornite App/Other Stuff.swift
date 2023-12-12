@@ -129,14 +129,14 @@ func commentGenerator(_ score: Double) -> String {
     ]
     
     switch score {
-    case 0.01...33.33:
-        return badComments[Int.random(in: 0..<badComments.count)]
-    case 33.34...66.66:
-        return medComments[Int.random(in: 0..<medComments.count)]
-    case 66.67...100.00:
-        return goodComments[Int.random(in: 0..<goodComments.count)]
-    default:
-        return "-----"
+        case 0.01...33.33:
+            return badComments[Int.random(in: 0..<badComments.count)]
+        case 33.34...66.66:
+            return medComments[Int.random(in: 0..<medComments.count)]
+        case 66.67...1000.00:
+            return goodComments[Int.random(in: 0..<goodComments.count)]
+        default:
+            return "---------"
     }
 }
 

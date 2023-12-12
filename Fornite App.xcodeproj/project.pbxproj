@@ -15,7 +15,7 @@
 		394C05852B07D6E60002731C /* Fornite_AppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394C05842B07D6E60002731C /* Fornite_AppUITests.swift */; };
 		394C05872B07D6E60002731C /* Fornite_AppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394C05862B07D6E60002731C /* Fornite_AppUITestsLaunchTests.swift */; };
 		394C05942B07D73A0002731C /* API Manager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 394C05932B07D73A0002731C /* API Manager.swift */; };
-		39EC4F582B0D15F800B11A39 /* OtherStuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EC4F572B0D15F800B11A39 /* OtherStuff.swift */; };
+		39EC4F582B0D15F800B11A39 /* Other Stuff.swift in Sources */ = {isa = PBXBuildFile; fileRef = 39EC4F572B0D15F800B11A39 /* Other Stuff.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,7 +47,7 @@
 		394C05842B07D6E60002731C /* Fornite_AppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fornite_AppUITests.swift; sourceTree = "<group>"; };
 		394C05862B07D6E60002731C /* Fornite_AppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fornite_AppUITestsLaunchTests.swift; sourceTree = "<group>"; };
 		394C05932B07D73A0002731C /* API Manager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "API Manager.swift"; sourceTree = "<group>"; };
-		39EC4F572B0D15F800B11A39 /* OtherStuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherStuff.swift; sourceTree = "<group>"; };
+		39EC4F572B0D15F800B11A39 /* Other Stuff.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Other Stuff.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -100,7 +100,7 @@
 			children = (
 				394C05692B07D6E50002731C /* ForniteApp.swift */,
 				394C056B2B07D6E50002731C /* ContentView.swift */,
-				39EC4F572B0D15F800B11A39 /* OtherStuff.swift */,
+				39EC4F572B0D15F800B11A39 /* Other Stuff.swift */,
 				394C05932B07D73A0002731C /* API Manager.swift */,
 				394C056D2B07D6E60002731C /* Assets.xcassets */,
 				394C056F2B07D6E60002731C /* Preview Content */,
@@ -266,7 +266,7 @@
 				394C056C2B07D6E50002731C /* ContentView.swift in Sources */,
 				394C05942B07D73A0002731C /* API Manager.swift in Sources */,
 				394C056A2B07D6E50002731C /* ForniteApp.swift in Sources */,
-				39EC4F582B0D15F800B11A39 /* OtherStuff.swift in Sources */,
+				39EC4F582B0D15F800B11A39 /* Other Stuff.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
